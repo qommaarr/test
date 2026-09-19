@@ -1,0 +1,1143 @@
+/* =========================================================
+   TRACK ACCESS SCHEDULER
+   GLOBAL STYLES
+   ========================================================= */
+ 
+/* =========================================================
+   1. VARIABLES
+   ========================================================= */
+ 
+:root {
+    color-scheme: dark;
+  --bg: #12161a;
+  --panel: #1a2027;
+  --panel-2: #212932;
+ 
+  --line: #2c3742;
+ 
+  --text: #e7ecf0;
+  --muted: #8a97a3;
+ 
+  --amber: #e8a23d;
+  --amber-dim: #5a4526;
+ 
+  --green: #4fbf8a;
+  --red: #e2574c;
+  --blue: #5b9bd5;
+}
+ 
+/* =========================================================
+   LIGHT MODE
+   ========================================================= */
+ 
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f3f2ee;
+  --panel: #ffffff;
+  --panel-2: #f7f6f2;
+
+  --line: #dcd8cf;
+
+  --text: #1b1e21;
+  --muted: #6b7078;
+
+  --amber-dim: #f4dfb8;
+}
+ 
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
+ 
+* {
+  box-sizing: border-box;
+}
+ 
+html,
+body {
+  margin: 0;
+  padding: 0;
+ 
+  background: var(--bg);
+  color: var(--text);
+ 
+  font-family: "IBM Plex Sans", sans-serif;
+}
+ 
+body {
+  min-height: 100vh;
+}
+ 
+/* =========================================================
+   3. MAIN APP LAYOUT
+   ========================================================= */
+ 
+.app {
+  display: flex;
+ 
+  min-height: 100vh;
+}
+ 
+/* =========================================================
+   4. SIDEBAR
+   ========================================================= */
+ 
+.side {
+  width: 340px;
+  flex: 0 0 340px;
+ 
+  background: var(--panel);
+ 
+  border-right: 1px solid var(--line);
+ 
+  padding: 28px 24px;
+ 
+  display: flex;
+  flex-direction: column;
+ 
+  gap: 22px;
+}
+ 
+/* =========================================================
+   5. MAIN CONTENT
+   ========================================================= */
+ 
+.main {
+  flex: 1;
+ 
+  padding: 28px 32px;
+ 
+  min-width: 0;
+ 
+  overflow-x: auto;
+}
+ 
+/* =========================================================
+   6. BRAND
+   ========================================================= */
+ 
+.brand {
+  display: flex;
+ 
+  align-items: baseline;
+ 
+  gap: 10px;
+}
+ 
+.brand .mark {
+  width: 10px;
+  height: 10px;
+ 
+  border-radius: 2px;
+ 
+  background: var(--amber);
+ 
+  flex: 0 0 10px;
+ 
+  box-shadow: 0 0 8px var(--amber);
+}
+ 
+.brand h1 {
+  font-size: 17px;
+ 
+  margin: 0;
+ 
+  font-weight: 600;
+ 
+  letter-spacing: 0.2px;
+}
+ 
+.brand p {
+  margin: 4px 0 0;
+ 
+  color: var(--muted);
+ 
+  font-size: 12.5px;
+ 
+  line-height: 1.5;
+}
+ 
+/* =========================================================
+   7. SIDEBAR SECTIONS
+   ========================================================= */
+ 
+.section {
+  display: flex;
+ 
+  flex-direction: column;
+ 
+  gap: 10px;
+}
+ 
+.section h2 {
+  font-size: 11px;
+ 
+  text-transform: uppercase;
+ 
+  color: var(--muted);
+ 
+  margin: 0 0 2px;
+ 
+  letter-spacing: 1px;
+ 
+  font-weight: 600;
+}
+ 
+/* =========================================================
+   8. FILE DROPZONE
+   ========================================================= */
+ 
+.dropzone {
+  border: 1.5px dashed var(--line);
+ 
+  border-radius: 8px;
+ 
+  padding: 16px;
+ 
+  text-align: center;
+ 
+  cursor: pointer;
+ 
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+ 
+  background: var(--panel-2);
+}
+ 
+.dropzone:hover,
+.dropzone.drag {
+  border-color: var(--amber);
+ 
+  background: var(--amber-dim);
+}
+ 
+.dropzone p {
+  margin: 0;
+ 
+  font-size: 12.5px;
+ 
+  color: var(--muted);
+}
+ 
+.dropzone strong {
+  color: var(--text);
+ 
+  font-weight: 500;
+}
+ 
+input[type="file"] {
+  display: none;
+}
+ 
+/* =========================================================
+   9. FILE LIST
+   ========================================================= */
+ 
+.filelist {
+  display: flex;
+ 
+  flex-direction: column;
+ 
+  gap: 5px;
+ 
+  margin-top: 2px;
+}
+ 
+.filerow {
+  display: flex;
+ 
+  align-items: center;
+ 
+  justify-content: space-between;
+ 
+  font-size: 12px;
+ 
+  font-family: "IBM Plex Mono", monospace;
+ 
+  padding: 5px 8px;
+ 
+  border-radius: 5px;
+ 
+  background: var(--panel-2);
+}
+ 
+.filerow .ok {
+  color: var(--green);
+}
+ 
+.filerow .name {
+  color: var(--text);
+ 
+  overflow: hidden;
+ 
+  text-overflow: ellipsis;
+ 
+  white-space: nowrap;
+ 
+  max-width: 210px;
+}
+ 
+/* =========================================================
+   10. BUTTONS
+   ========================================================= */
+ 
+button {
+  font-family: inherit;
+ 
+  cursor: pointer;
+}
+ 
+/* RUN BUTTON */
+ 
+.run-btn {
+  background: var(--amber);
+ 
+  color: #1a1204;
+ 
+  border: none;
+ 
+  border-radius: 7px;
+ 
+  padding: 12px 14px;
+ 
+  font-weight: 600;
+ 
+  font-size: 13.5px;
+ 
+  transition:
+    filter 0.15s,
+    transform 0.1s;
+}
+ 
+.run-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+ 
+.run-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+ 
+.run-btn:disabled {
+  opacity: 0.4;
+ 
+  cursor: not-allowed;
+}
+ 
+/* SAMPLE BUTTON */
+ 
+.sample-btn {
+  background: transparent;
+ 
+  border: 1px solid var(--line);
+ 
+  color: var(--muted);
+ 
+  border-radius: 7px;
+ 
+  padding: 9px 12px;
+ 
+  font-size: 12px;
+}
+ 
+.sample-btn:hover {
+  border-color: var(--amber);
+ 
+  color: var(--text);
+}
+ 
+/* =========================================================
+   11. STATUS
+   ========================================================= */
+ 
+.status {
+  font-size: 12px;
+ 
+  color: var(--muted);
+ 
+  line-height: 1.5;
+ 
+  min-height: 16px;
+}
+ 
+.status.err {
+  color: var(--red);
+}
+ 
+.status.ok {
+  color: var(--green);
+}
+ 
+/* =========================================================
+   12. SIDEBAR FOOTER
+   ========================================================= */
+ 
+.footer-note {
+  margin-top: auto;
+ 
+  font-size: 11px;
+ 
+  color: var(--muted);
+ 
+  line-height: 1.6;
+ 
+  border-top: 1px solid var(--line);
+ 
+  padding-top: 14px;
+}
+ 
+/* =========================================================
+   13. TOP BAR
+   ========================================================= */
+ 
+.topbar {
+  display: flex;
+ 
+  align-items: center;
+ 
+  justify-content: space-between;
+ 
+  gap: 20px;
+ 
+  margin-bottom: 20px;
+ 
+  flex-wrap: wrap;
+}
+ 
+/* =========================================================
+   14. SCENARIO TABS
+   ========================================================= */
+ 
+.tabs {
+  display: flex;
+ 
+  gap: 6px;
+ 
+  background: var(--panel);
+ 
+  border: 1px solid var(--line);
+ 
+  border-radius: 9px;
+ 
+  padding: 4px;
+}
+ 
+.tab {
+  padding: 8px 18px;
+ 
+  border: none;
+ 
+  background: transparent;
+ 
+  color: var(--muted);
+ 
+  border-radius: 6px;
+ 
+  font-size: 13px;
+ 
+  font-weight: 500;
+}
+ 
+.tab.active {
+  background: var(--amber);
+ 
+  color: #1a1204;
+ 
+  font-weight: 600;
+}
+ 
+.tab:disabled {
+  opacity: 0.35;
+ 
+  cursor: not-allowed;
+}
+ 
+/* =========================================================
+   15. DOWNLOAD BUTTONS
+   ========================================================= */
+ 
+.dl-group {
+  display: flex;
+ 
+  gap: 8px;
+}
+ 
+.dl-btn {
+  background: var(--panel-2);
+ 
+  border: 1px solid var(--line);
+ 
+  color: var(--text);
+ 
+  padding: 8px 12px;
+ 
+  border-radius: 7px;
+ 
+  font-size: 12.5px;
+ 
+  display: flex;
+ 
+  align-items: center;
+ 
+  gap: 6px;
+}
+ 
+.dl-btn:hover:not(:disabled) {
+  border-color: var(--blue);
+}
+ 
+.dl-btn:disabled {
+  opacity: 0.35;
+ 
+  cursor: not-allowed;
+}
+ 
+/* =========================================================
+   16. EMPTY STATE
+   ========================================================= */
+ 
+.empty {
+  display: flex;
+ 
+  flex-direction: column;
+ 
+  align-items: flex-start;
+ 
+  gap: 10px;
+ 
+  padding: 60px 10px;
+ 
+  max-width: 520px;
+}
+ 
+.empty h2 {
+  font-size: 22px;
+ 
+  margin: 0;
+ 
+  font-weight: 600;
+}
+ 
+.empty p {
+  color: var(--muted);
+ 
+  font-size: 14px;
+ 
+  line-height: 1.65;
+ 
+  margin: 0;
+}
+ 
+.empty .steps {
+  margin-top: 10px;
+ 
+  display: flex;
+ 
+  flex-direction: column;
+ 
+  gap: 8px;
+ 
+  font-size: 13px;
+}
+ 
+.empty .steps div {
+  display: flex;
+ 
+  gap: 10px;
+ 
+  align-items: baseline;
+}
+ 
+.empty .steps span.n {
+  color: var(--amber);
+ 
+  font-family: "IBM Plex Mono", monospace;
+ 
+  font-weight: 600;
+}
+ 
+/* =========================================================
+   17. SUMMARY CARDS
+   ========================================================= */
+ 
+.cards {
+  display: grid;
+ 
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+ 
+  gap: 12px;
+ 
+  margin-bottom: 22px;
+}
+ 
+.card {
+  background: var(--panel);
+ 
+  border: 1px solid var(--line);
+ 
+  border-radius: 10px;
+ 
+  padding: 16px 18px;
+}
+ 
+.card .lbl {
+  font-size: 11px;
+ 
+  text-transform: uppercase;
+ 
+  letter-spacing: 0.6px;
+ 
+  color: var(--muted);
+ 
+  margin-bottom: 8px;
+}
+ 
+.card .val {
+  font-family: "IBM Plex Mono", monospace;
+ 
+  font-size: 24px;
+ 
+  font-weight: 600;
+}
+ 
+.card .val.green {
+  color: var(--green);
+}
+ 
+.card .val.red {
+  color: var(--red);
+}
+ 
+.card .val.amber {
+  color: var(--amber);
+}
+ 
+.card .sub {
+  font-size: 11.5px;
+ 
+  color: var(--muted);
+ 
+  margin-top: 4px;
+}
+ 
+/* =========================================================
+   18. PANELS
+   ========================================================= */
+ 
+.panel {
+  background: var(--panel);
+ 
+  border: 1px solid var(--line);
+ 
+  border-radius: 10px;
+ 
+  margin-bottom: 20px;
+ 
+  overflow: hidden;
+}
+ 
+.panel-h {
+  display: flex;
+ 
+  justify-content: space-between;
+ 
+  align-items: center;
+ 
+  padding: 14px 18px;
+ 
+  border-bottom: 1px solid var(--line);
+}
+ 
+.panel-h h3 {
+  margin: 0;
+ 
+  font-size: 13.5px;
+ 
+  font-weight: 600;
+}
+ 
+.panel-h .hint {
+  font-size: 11.5px;
+ 
+  color: var(--muted);
+}
+ 
+/* =========================================================
+   19. TABLES
+   ========================================================= */
+ 
+table {
+  width: 100%;
+ 
+  border-collapse: collapse;
+ 
+  font-size: 12.5px;
+}
+ 
+th {
+  text-align: left;
+ 
+  padding: 9px 16px;
+ 
+  color: var(--muted);
+ 
+  font-weight: 500;
+ 
+  font-size: 11px;
+ 
+  text-transform: uppercase;
+ 
+  letter-spacing: 0.4px;
+ 
+  border-bottom: 1px solid var(--line);
+ 
+  position: sticky;
+ 
+  top: 0;
+ 
+  background: var(--panel);
+}
+ 
+td {
+  padding: 8px 16px;
+ 
+  border-bottom: 1px solid var(--line);
+ 
+  font-family: "IBM Plex Mono", monospace;
+}
+ 
+tr:last-child td {
+  border-bottom: none;
+}
+ 
+tr:hover td {
+  background: var(--panel-2);
+}
+ 
+.tablewrap {
+  max-height: 360px;
+ 
+  overflow: auto;
+}
+ 
+/* =========================================================
+   20. PRIORITY PILLS
+   ========================================================= */
+ 
+.pill {
+  display: inline-block;
+ 
+  padding: 2px 8px;
+ 
+  border-radius: 20px;
+ 
+  font-size: 11px;
+ 
+  font-family: "IBM Plex Sans", sans-serif;
+ 
+  font-weight: 600;
+}
+ 
+.pill.p1 {
+  background: rgba(226, 87, 76, 0.16);
+ 
+  color: var(--red);
+}
+ 
+.pill.p2 {
+  background: rgba(232, 162, 61, 0.16);
+ 
+  color: var(--amber);
+}
+ 
+.pill.p3 {
+  background: rgba(79, 191, 138, 0.16);
+ 
+  color: var(--green);
+}
+ 
+/* =========================================================
+   21. STATUS COLOURS
+   ========================================================= */
+ 
+.od0 {
+  color: var(--green);
+}
+ 
+.odx {
+  color: var(--red);
+}
+ 
+/* =========================================================
+   22. SELF-CHECK
+   ========================================================= */
+ 
+.viol {
+  padding: 14px 18px;
+ 
+  font-size: 12.5px;
+ 
+  color: var(--muted);
+}
+ 
+.viol .row {
+  display: flex;
+ 
+  gap: 10px;
+ 
+  padding: 6px 0;
+ 
+  border-bottom: 1px solid var(--line);
+ 
+  font-family: "IBM Plex Mono", monospace;
+ 
+  font-size: 12px;
+}
+ 
+.viol .row:last-child {
+  border-bottom: none;
+}
+ 
+.viol .tag {
+  color: var(--red);
+ 
+  flex: 0 0 90px;
+}
+ 
+/* =========================================================
+   23. RESPONSIVE DESIGN
+   ========================================================= */
+ 
+@media (max-width: 880px) {
+  .app {
+    flex-direction: column;
+  }
+ 
+  .side {
+    width: auto;
+ 
+    flex: none;
+ 
+    border-right: none;
+ 
+    border-bottom: 1px solid var(--line);
+  }
+}
+ 
+#calendar {
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: inherit;
+  min-height: 600px;
+  width: 100%;
+}
+ 
+#calendar.hover {
+  display: none;
+}
+ 
+/* =========================================================
+   24. NETWORK VIEW
+   ========================================================= */
+ 
+.net-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+ 
+.net-controls label {
+  font-weight: 600;
+  color: var(--text);
+}
+ 
+.net-controls input[type="range"] {
+  flex: 1 1 220px;
+  min-width: 160px;
+  accent-color: var(--amber);
+}
+ 
+.net-week-label {
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--text);
+  min-width: 60px;
+}
+ 
+.net-play-btn {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+}
+ 
+.net-play-btn:hover {
+  border-color: var(--amber);
+}
+ 
+.net-play-btn.playing {
+  background: var(--amber);
+  color: #1a1204;
+  border-color: var(--amber);
+}
+ 
+.net-legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+ 
+.net-legend span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+}
+ 
+.net-legend .sw {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+ 
+.sw-idle {
+  background: #334155;
+  opacity: 0.5;
+}
+.sw-buf {
+  background: transparent;
+  border: 1.5px dashed #f59e0b;
+}
+.sw-ok {
+  background: #22c55e;
+}
+.sw-near {
+  background: #f59e0b;
+}
+.sw-full {
+  background: #ef4444;
+}
+ 
+.net-svg-wrap {
+  padding: 6px 12px;
+  overflow-x: auto;
+}
+ 
+.net-svg-wrap svg {
+  min-width: 780px;
+}
+ 
+.net-svg-wrap [data-locid] {
+  cursor: pointer;
+  transition: stroke 0.15s, fill 0.15s, opacity 0.15s;
+}
+ 
+.net-svg-wrap [data-locid]:hover {
+  filter: brightness(1.3);
+}
+ 
+.net-info {
+  padding: 12px 18px;
+  font-size: 12.5px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", monospace;
+  line-height: 1.6;
+}
+ 
+.net-info b {
+  color: var(--text);
+  font-family: "IBM Plex Sans", sans-serif;
+}
+ 
+/* =========================================================
+   25. REQUIRED FILES CHECKLIST
+   ========================================================= */
+ 
+.reqlist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  margin-top: 2px;
+}
+ 
+.reqitem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+}
+ 
+.reqitem .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--line);
+  flex: 0 0 7px;
+}
+ 
+.reqitem.got {
+  color: var(--text);
+}
+ 
+.reqitem.got .dot {
+  background: var(--green);
+  box-shadow: 0 0 4px var(--green);
+}
+ 
+@keyframes panelFlash {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+  20%,
+  60% {
+    box-shadow: 0 0 0 2px var(--amber);
+  }
+}
+ 
+.panel.flash {
+  animation: panelFlash 1.4s ease-in-out;
+}
+ 
+.hint-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.table-filter {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 11.5px;
+  font-family: "IBM Plex Mono", monospace;
+  width: 150px;
+}
+ 
+.table-filter:focus {
+  outline: none;
+  border-color: var(--amber);
+}
+ 
+.table-filter::placeholder {
+  color: var(--muted);
+}
+ 
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: var(--line);
+}
+ 
+.fc-header-toolbar button {
+  background-color: var(--panel-2) !important;
+  border-color: var(--line) !important;
+  color: var(--text) !important;
+}
+ 
+.fc-header-toolbar button.fc-button-active {
+  background-color: var(--amber) !important;
+  color: #1a1204 !important;
+}
+ 
+.remove-btn {
+  background: none;
+  border: none;
+  color: #475569; /* Neutral gray by default */
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 8px;
+  transition: color 0.15s ease;
+}
+ 
+.remove-btn:hover {
+  color: #dc2626; /* Darker red only on hover */
+}
+
+
+.theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.theme-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.theme-toggle {
+  position: relative;
+  width: 58px;
+  height: 30px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.theme-toggle:hover {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(232, 162, 61, 0.15);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+.theme-toggle .knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--amber);
+  color: #1a1204;
+  box-shadow: 0 0 10px rgba(232, 162, 61, 0.45);
+  transition: transform 0.28s cubic-bezier(0.4, 0.1, 0.2, 1);
+}
+.theme-toggle .knob svg { width: 14px; height: 14px; }
+.theme-toggle .moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .knob { transform: translateX(28px); }
+:root[data-theme="dark"] .theme-toggle .sun  { display: none; }
+:root[data-theme="dark"] .theme-toggle .moon { display: block; }
+
+/* tables + calendar take their colours straight from the theme */
+td { color: var(--text); }
+.fc {
+  color: var(--text);
+  --fc-page-bg-color: var(--panel);
+  --fc-neutral-bg-color: var(--panel-2);
+  --fc-neutral-text-color: var(--muted);
+  --fc-border-color: var(--line);
+  --fc-today-bg-color: rgba(232, 162, 61, 0.1);
+}
+.fc a,
+.fc .fc-toolbar-title,
+.fc .fc-col-header-cell-cushion,
+.fc .fc-timegrid-slot-label-cushion,
+.fc .fc-timegrid-axis-cushion,
+.fc .fc-daygrid-day-number {
+  color: var(--text);
+}
